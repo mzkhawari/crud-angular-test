@@ -1,0 +1,33 @@
+<!-- Header -->
+<div
+  class="relative row-auto h-25  flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-2   border-b-4 border-green-800">
+  <!-- Loader -->
+  <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading">
+    <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+  </div>
+  <!-- Title -->
+  <div class="text-2xl font-extrabold tracking-tight">{{title}}</div>
+  <!-- Actions -->
+  <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+    
+    <button class="mr-4" mat-flat-button [color]="'primary'" (click)="OnAdd()" *ngIf="isAddButton">
+      <a class="px-2 text-2xl primary" >
+        <i class="feather-plus"></i>
+      </a>
+      <span class="ml-2 mr-1">Add Customer </span>
+    </button>
+
+    <a *ngIf="isCloseButton" >
+      <button class="ml-4" mat-flat-button type="button" (click)="dialogRef.closeAll()">
+        <a class="px-2 text-2xl primary" >
+          <i class="feather-x"></i>
+        </a>
+        <span class="ml-2 mr-1"> Close </span>
+      </button>
+    </a>    
+  </div>
+</div>
+
+<div class="relative row-auto h-5  flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between pb-0 pt-1 ">
+  <!-- <div class="text-1xl font-extrabold tracking-tight">{{subTitle}}</div> -->
+</div>

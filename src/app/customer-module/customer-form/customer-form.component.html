@@ -1,0 +1,66 @@
+<ng-container>
+  <form (ngSubmit)="OnSubmit(f)" #f="ngForm">
+    <mat-card class="bg-white">
+      <app-page-header [title]='model.Id>0 ? "Customer" : "Customer"' 
+          isSaveButton="true" 
+          isCloseButton="true" (OnClose)="dialogRef.close()" >
+      </app-page-header>
+
+      <div class="max-h-fit">
+        <div class="grid grid-cols-12">
+          <div class="col-span-4">
+            <mat-form-field appearance="outline" class="w-11/12">
+              <mat-label>First Name </mat-label>
+              <input matInput name="Firstname" [(ngModel)]="model.Firstname">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-4">
+            <mat-form-field appearance="outline" class="w-11/12">
+              <mat-label>Last Name </mat-label>
+              <input matInput name="Lastname" [(ngModel)]="model.Lastname">
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-4">
+            <mat-form-field appearance="outline" class="w-11/12">
+              <mat-label>Phone Number </mat-label>
+              <input matInput appPhoneMask name="PhoneNumber" [(ngModel)]="model.PhoneNumber">
+              <mat-error class="error-message" *ngIf="isValidPhoneNumber">
+                Please enter a valid PhoneNumber.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-4">
+            <mat-form-field appearance="outline" class="w-11/12">
+              <mat-label>Email </mat-label>
+              <input type="email" [errorStateMatcher]="matcher" [formControl]="emailValidator"               
+              matInput email name="Email" [(ngModel)]="model.Email">
+              <mat-error class="error-message" *ngIf="emailValidator.hasError('email') && !emailValidator.hasError('required')">
+                Please enter a valid email address
+              </mat-error>
+              <mat-error class="error-message" *ngIf="emailValidator.hasError('required')">
+                Email is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-4">
+            <mat-form-field appearance="outline" class="w-11/12">
+              <mat-label>Bank Account Number  </mat-label>
+              <input matInput name="BankAccountNumber" appBankAccountMask [formControl]="bankAccountValidator" [(ngModel)]="model.BankAccountNumber">
+              <mat-error class="error-message" *ngIf="bankAccountValidator.hasError('required')">
+                Bank Account is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-span-4">
+            <date-picker titleFiled="Date Of Birth"  [(date)]="model.DateOfBirth"></date-picker>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </form>
+</ng-container>

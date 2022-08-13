@@ -1,0 +1,61 @@
+<ng-container>
+  <div class="grid">
+    <grid-header *ngIf="isHeader" title="{{title}} List" [isAddButton]="isAdding" [isSearchBox]="isSearching" [isCloseButton]="isCloseButton"
+      (OnAddItem)="OnAdd()" (OnTextFilter)="applyFilter($event)">
+    </grid-header>
+
+    <div class="grid-section  mt-5 rounded-lg" style="border-radius:100px; overflow:hidden">
+      <dx-data-grid id="gridContainer" [dataSource]="datasource" [rowAlternationEnabled]="true" [showColumnLines]="true"
+        [showRowLines]="true" [allowColumnResizing]="true" [columnAutoWidth]="true" [rtlEnabled]="false"
+        [allowColumnReordering]="true" keyExpr="Id" (onContentReady)="OnContentReady($event)"
+        (onRowPrepared)="OnRowPrepared($event)" (onCellPrepared)="OnCellPrepared($event)" [(columns)]="columns"
+        [showBorders]="true">
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[5, 10, 20, 50, 100, 200, 500, 1000]"
+          [showInfo]="true"> </dxo-pager>
+        <dxo-scrolling mode="both"></dxo-scrolling>
+        <dxo-selection [selectAllMode]="allPages" [showCheckBoxesMode]="checkBoxesMode" mode="multiple"></dxo-selection>
+        <dxo-grouping #expand [autoExpandAll]="true"></dxo-grouping>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+
+
+        <div *dxTemplate="let d of 'addCellTemplate'">
+          <a class="px-2 text-2xl primary" (click)="OnAdd(d)" title="Add">
+            <i class="feather-plus"></i>
+          </a>
+          <a class="px-2 text-2xl primary" (click)="OnEdit(d)" title="Edit">
+            <i class="feather-edit"></i>
+          </a>
+        </div>
+
+        <div *dxTemplate="let d of 'editCellTemplate'">
+          <a class="px-2 text-2xl primary" (click)="OnDelete(d)" title="Delete">
+            <i class="feather-trash "></i>
+          </a>
+          <a class="px-2 text-2xl primary" (click)="OnEdit(d)" title="Edit">
+            <i class="feather-edit "></i>
+          </a>
+        </div>
+
+
+        <div *dxTemplate="let d of 'detailCellTemplate'" title="Details">
+          <a class="px-2 text-2xl primary" (click)="OnDetail(d)">
+            <i class="feather-more-horizontal "></i>
+          </a>
+        </div>
+
+        <div *dxTemplate="let d of 'detailCellTemplate2'">
+          <a class="px-2 text-2xl primary" (click)="OnDetail2(d)" title="Parameters">
+            <i class="feather-sliders"></i>
+          </a>
+        </div>
+
+      </dx-data-grid>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noData>
+  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There is No Data!</div>
+</ng-template>

@@ -1,0 +1,63 @@
+<ng-container >
+  <div class="w-full">
+    <!-- Header -->
+    <div
+      class="relative row-auto h-25 flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+      <!-- Loader -->
+      <div class="absolute inset-x-0 bottom-0" *ngIf="isLoading" >
+        <mat-progress-bar [mode]="'indeterminate'"></mat-progress-bar>
+      </div>
+      <!-- Title -->
+      <div class="font-extrabold tracking-tight">{{titleGrid}}</div>
+      <!-- Actions -->
+      <div class="flex flex-shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+        <!-- Add product button -->
+        <button class="mr-4" mat-flat-button [color]="'primary'" (click)="OnAdd()">
+          <mat-icon [svgIcon]="'feather:plus'"></mat-icon>
+          <span class="ml-2 mr-1"> Add Customer </span>
+        </button>
+      </div>
+    </div>
+    <div style="width: 100%;" class="max-h-fit" *ngIf="datasource.length > 0 || isLoading; else noData" >
+      <table class="table-auto" mat-table [dataSource]="dataSource" #tableSort="matSort" matSort>
+        <ng-container *ngFor="let item of columns;let rowId = Index;" [matColumnDef]="item.dataField">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{item.caption}} </th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="item.dataField != 'actions' && !item.isBool == undefined || !item.isBool">
+              {{element[item.dataField]}}
+            </span>
+            <span *ngIf="item.isBool">
+              <ng-container *ngIf="element[item.dataField]">
+                <mat-icon class="text-green-400 icon-size-5" [svgIcon]="'feather:check'"></mat-icon>
+              </ng-container>
+              <ng-container *ngIf="!element[item.dataField]">
+                <mat-icon class="text-gray-400 icon-size-5" [svgIcon]="'feather:x'"></mat-icon>
+              </ng-container>
+            </span>
+
+            <span *ngIf="item.dataField == 'actions' ">
+              <button mat-icon-button color="primary" (click)="OnEdit(element)" title="Edit Contact"><mat-icon [ngClass]="'icon-size-32'" svgIcon="feather:edit-2" ></mat-icon></button>
+              <button mat-icon-button color="primary" (click)="OnDelete(element)" title="View Contact"><mat-icon [ngClass]="'icon-size-32'" svgIcon="feather:trash-2" ></mat-icon></button>
+            </span>
+            <span *ngIf="item.dataField == 'actions1' ">
+              <button mat-icon-button color="primary" (click)="OnDetail(element)" title="Details"><mat-icon [ngClass]="'icon-size-32'" svgIcon="feather:settings" ></mat-icon></button>
+            </span>
+            <span *ngIf="item.dataField == 'actions2' ">
+              <button mat-icon-button color="primary" (click)="OnDetail2(element)" title="Parameters"><mat-icon [ngClass]="'icon-size-32'" svgIcon="feather:settings" ></mat-icon></button>
+            </span>
+          </td>         
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100, 150, 200]" pageSize="5" showFirstLastButtons
+        aria-label="Select page ">
+      </mat-paginator>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noData>
+  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There is no Data</div>
+</ng-template>

@@ -1,0 +1,17 @@
+<ng-container >
+  <div class="w-full">        
+    <mat-card class="max-h-fit bg-white" >
+        <app-grid   
+          title="Customer "
+          isHeader="true"
+          isAdding="true"
+          [datasource]="datasource"
+          [columns]="columns"        
+          (OnAddItem)="openDialogForm()"
+          (OnDeleteItem)="onDeleteConfirm($event)"
+          (OnEditItem)="OnUpdate($event)" >
+        </app-grid>
+    </mat-card>
+  </div>
+</ng-container>
+
