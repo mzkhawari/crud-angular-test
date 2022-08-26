@@ -16,7 +16,6 @@ import { NgxCurrencyModule } from "ngx-currency";
 
 import { CurrencyMaskModule , CURRENCY_MASK_CONFIG } from "ng2-currency-mask";
 import { CustomerModule } from './customer-module/customer.module';
-import { TestingComponent } from './testing/testing.component';
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
@@ -47,7 +46,6 @@ const config: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
-        TestingComponent
     ],
     imports     : [
         BrowserModule,
